@@ -1,9 +1,9 @@
-name: Build Android APK
+name: Build Launcher APK
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # 支持手动点击按钮触发编译
+  workflow_dispatch: # 支持手动点击按钮触发
 
 jobs:
   build:
@@ -19,14 +19,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 3. 编译 Release 版本 APK
+      - name: 3. 赋予执行权限并编译 Release APK
         run: |
-          cd launcher
           chmod +x gradlew
           ./gradlew assembleRelease
 
-      - name: 4. 上传编译好的 APK 供下载
+      - name: 4. 上传生成的 APK 文件
         uses: actions/upload-artifact@v4
         with:
-          name: CleanYourTV-Launcher-APK
-          path: launcher/app/build/outputs/apk/release/*.apk
+          name: CleanYourTV-Launcher
+          path: app/build/outputs/apk/release/*.apk
